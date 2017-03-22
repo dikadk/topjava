@@ -30,14 +30,14 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 23, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 24, 20, 0), "Ужин", 2001)
         );
-        List<UserMealWithExceed> userMealWithExceedList = getFilteredWithExceededStreams(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        List<UserMealWithExceed> userMealWithExceedList = getFilteredWithExceededLoops(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
         userMealWithExceedList.forEach(System.out::println);
 //        .toLocalDate();
 //        .toLocalTime();
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceededLoops(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        Collections.sort(mealList, Comparator.comparingInt(o -> o.getDateTime().getDayOfMonth()));
+        mealList.sort(Comparator.comparingInt(o->o.getDateTime().getDayOfMonth()));
         Map<LocalDate, Integer> caloriesPerDayMap = new HashMap<>();
         for (UserMeal userMeal : mealList) {
             caloriesPerDayMap.merge(userMeal.getDateTime().toLocalDate(), userMeal.getCalories(), Integer::sum);
