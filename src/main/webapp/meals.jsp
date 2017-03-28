@@ -25,16 +25,14 @@
     <link rel="stylesheet" href="resources/css/mystyle.css"/>
 </head>
 <body>
-
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse static-top">
-    <a class="navbar-brand" href="#">Meals List</a>
-</nav>
-<section>
-    <div class="container">
+<jsp:include page="header.jsp"/>
+<div class="container">
+    <section>
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-content">
-                    <table class="table">
+                    <a href="mealForm" role="button" class="btn btn-primary">Primary</a>
+                    <table class="table table-responsive">
                         <thead class="thead-inverse">
                         <tr>
                             <th>Дата и время</th>
@@ -46,23 +44,22 @@
                         </thead>
                         <tbody>
                         <c:forEach var="meal" items="${mealsList}">
-                        <tr style="color:${meal.exceed ? 'red' : 'green'}">
-                            <th scope="row">${fn:replace(meal.dateTime,'T',' ')}</th>
-                            <td>${meal.description}</td>
-                            <td>${meal.calories}</td>
-                            <td><a href="#"><i class="fa fa-pencil fa-lg"></i></a></td>
-                            <td><a href="#"><i class="fa fa-trash fa-lg"></i></a></td>
-                        </tr>
+                            <tr style="color:${meal.exceed ? 'red' : 'green'}">
+                                <th scope="row">${fn:replace(meal.dateTime,'T',' ')}</th>
+                                <td>${meal.description}</td>
+                                <td>${meal.calories}</td>
+                                <td><a href="#"><i class="fa fa-pencil fa-lg"></i></a></td>
+                                <td><a href="#"><i class="fa fa-trash fa-lg"></i></a></td>
+                            </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    </section>
     <!-- /.container -->
-</section>
+</div>
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
