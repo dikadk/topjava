@@ -20,8 +20,9 @@
     <!--Font Awesome -->
     <script src="https://use.fontawesome.com/3977ae73b8.js"></script>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/css/mystyle.css"/>
 </head>
 <body>
@@ -31,7 +32,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-content">
-                    <a href="mealForm" role="button" class="btn btn-primary">Primary</a>
+                    <a href="mealForm" role="button" class="btn btn-primary">Добавить Еду</a>
                     <table class="table table-responsive">
                         <thead class="thead-inverse">
                         <tr>
@@ -48,8 +49,8 @@
                                 <th scope="row">${fn:replace(meal.dateTime,'T',' ')}</th>
                                 <td>${meal.description}</td>
                                 <td>${meal.calories}</td>
-                                <td><a href="#"><i class="fa fa-pencil fa-lg"></i></a></td>
-                                <td><a href="#"><i class="fa fa-trash fa-lg"></i></a></td>
+                                <td><a href="/meals/mealForm/?id=${meal.id}"><i class="fa fa-pencil fa-lg"></i></a></td>
+                                <td><a href=""><i class="fa fa-trash fa-lg"></i></a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -60,15 +61,7 @@
     </section>
     <!-- /.container -->
 </div>
-<!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-        crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

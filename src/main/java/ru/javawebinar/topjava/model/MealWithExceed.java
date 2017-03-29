@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
  * 11.01.2015.
  */
 public class MealWithExceed {
+    private int id;
+
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -47,4 +49,10 @@ public class MealWithExceed {
     public boolean isExceed() {
         return exceed;
     }
+
+    public int getId() {
+        return id;
+    }
+
+
 }

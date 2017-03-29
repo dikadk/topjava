@@ -25,7 +25,7 @@ public class MealServlet extends HttpServlet {
     private MealDao mealDao;
 
     public MealServlet() {
-        this.mealDao = new MealDaoImpl(MealsUtil.getMealsList());
+        this.mealDao = new MealDaoImpl();
     }
 
     @Override

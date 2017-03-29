@@ -28,7 +28,6 @@
     <servlet>
         <servlet-name>mealFormServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.MealFormServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>mealFormServlet</servlet-name>
