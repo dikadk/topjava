@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-content">
-                    <a href="mealForm" role="button" class="btn btn-primary">Добавить Еду</a>
+                    <a href="meals?action=addMeal" role="button" class="btn btn-primary">Добавить Еду</a>
                     <table class="table table-responsive">
                         <thead class="thead-inverse">
                         <tr>
@@ -49,8 +49,8 @@
                                 <th scope="row">${fn:replace(meal.dateTime,'T',' ')}</th>
                                 <td>${meal.description}</td>
                                 <td>${meal.calories}</td>
-                                <td><a href="/meals/mealForm/?id=${meal.id}"><i class="fa fa-pencil fa-lg"></i></a></td>
-                                <td><a href=""><i class="fa fa-trash fa-lg"></i></a></td>
+                                <td><a href="meals?action=edit&id=${meal.id}"><i class="fa fa-pencil fa-lg"></i></a></td>
+                                <td><a href="meals?action=delete&id=${meal.id}"><i class="fa fa-trash fa-lg"></i></a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
