@@ -36,21 +36,21 @@
 <jsp:include page="header.jsp"/>
 <div class="container">
     <section>
-        <form>
-            <div clas="form-group">
-                <input class="form-control" id="id" type="hidden"/>
+        <form method="post" action="mealForm" name="formAddMeal">
+            <div class="form-group">
+                <input class="form-control" name="id" type="hidden" value="${meal.id}"/>
             </div>
-            <div clas="form-group">
-                <label for="dateTime">Дата и время</label>
-                <input class="form-control" id="dateTime" type="datetime-local"/>
+            <div class="form-group">
+                <label>Дата и время</label>
+                <input class="form-control"  name="dateTime" type="text" placeholder="yyyy/mm/dd HH:MM" value="${fn:replace(meal.dateTime,"T"," ")}" required />
             </div>
-            <div clas="form-group">
-                <label for="description">Описание</label>
-                <input class="form-control" type="text" id="description"/>
+            <div class="form-group">
+                <label>Описание</label>
+                <input class="form-control" type="text" name="description" value="${meal.description}" required/>
             </div>
-            <div clas="form-group">
-                <label for="calories">Калории</label>
-                <input class="form-control" type="number" id="calories"/>
+            <div class="form-group">
+                <label>Калории</label>
+                <input class="form-control" type="number" name="calories" value="${meal.calories}" required/>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>

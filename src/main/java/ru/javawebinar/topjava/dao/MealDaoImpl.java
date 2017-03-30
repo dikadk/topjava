@@ -53,24 +53,28 @@ public class MealDaoImpl implements MealDao {
     @Override
     public void create(Meal meal) {
         LOG.debug("meal " + id + " was created");
-        meals.put(getId(), meal);
+        int id = getId();
+        meal.setId(id);
+        meals.put(id, meal);
     }
 
     @Override
-    public void edit(int id) {
-        LOG.debug("meal " + id + " was edited");
+    public void edit(Meal meal) {
+        LOG.debug("meal " + meal.getId() + " was edited");
+        meals.put(meal.getId(),meal);
+
     }
 
     @Override
     public void delete(int id) {
         LOG.debug("meal " + id + " was removed");
         meals.remove(id,meals.get(id));
-        LOG.debug(String.valueOf(meals.size()));
     }
 
     @Override
     public Meal getById(int id) {
-        return null;
+        LOG.debug(id+" meal returned");
+        return meals.get(id);
     }
 
     @Override

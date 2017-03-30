@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface MealDao {
     void create(Meal meal);
-    void edit(int id);
+    void edit(Meal meal);
     void delete(int id);
     Meal getById(int id);
     List<Meal> getAll();
