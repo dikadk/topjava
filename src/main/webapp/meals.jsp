@@ -20,9 +20,11 @@
     <!--Font Awesome -->
     <script src="https://use.fontawesome.com/3977ae73b8.js"></script>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/css/mystyle.css"/>
 </head>
 <body>
@@ -45,12 +47,15 @@
                         </thead>
                         <tbody>
                         <c:forEach var="meal" items="${mealsList}">
+                            <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
                             <tr style="color:${meal.exceed ? 'red' : 'green'}">
                                 <th scope="row">${fn:replace(meal.dateTime,'T',' ')}</th>
                                 <td>${meal.description}</td>
                                 <td>${meal.calories}</td>
-                                <td><a href="meals?action=edit&id=${meal.id}"><i class="fa fa-pencil fa-lg"></i></a></td>
-                                <td><a href="meals?action=delete&id=${meal.id}"><i class="fa fa-trash fa-lg"></i></a></td>
+                                <td><a href="meals?action=edit&id=${meal.id}"><i class="fa fa-pencil fa-lg"></i></a>
+                                </td>
+                                <td><a href="meals?action=delete&id=${meal.id}"><i class="fa fa-trash fa-lg"></i></a>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -62,6 +67,8 @@
     <!-- /.container -->
 </div>
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>
