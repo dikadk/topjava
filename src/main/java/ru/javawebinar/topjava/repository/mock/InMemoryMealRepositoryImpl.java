@@ -1,48 +1,69 @@
 package ru.javawebinar.topjava.repository.mock;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * GKislin
  * 15.09.2015.
  */
 public class InMemoryMealRepositoryImpl implements MealRepository {
-    private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
+
+    private static final Logger LOG = getLogger(InMemoryMealRepositoryImpl.class);
+
+    private final Table<Integer, Integer, Meal> repository = HashBasedTable.create();
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(this::save);
+        MealsUtil.MEALS.forEach(meal -> this.save(2,meal));
     }
 
     @Override
-    public Meal save(Meal meal) {
+    public synchronized Meal save(int userId, Meal meal) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
         }
-        repository.put(meal.getId(), meal);
+        repository.put(userId,meal.getId(), meal);
+        LOG.debug("userId:"+userId+" | "+meal.getId()+" is saved");
         return meal;
     }
 
     @Override
-    public void delete(int id) {
-        repository.remove(id);
+    public synchronized void delete(int userId, int id) {
+        repository.remove(userId,id);
+        LOG.debug("userId:"+userId+" | "+id+" is deleted");
     }
 
     @Override
-    public Meal get(int id) {
-        return repository.get(id);
+    public synchronized Meal get(int userId, int id) {
+        LOG.debug("userId:"+userId+" | "+" is returned");
+        return repository.get(userId,id);
     }
 
     @Override
-    public Collection<Meal> getAll() {
-        return repository.values();
+    public synchronized Collection<Meal> getAll(int userId) {
+        Collection<Meal> meals = new ArrayList<>();
+        for(Table.Cell<Integer, Integer, Meal> cell: repository.cellSet()){
+            if(cell.getRowKey()==userId){
+                meals.add(cell.getValue());
+            }
+        }
+        return meals.stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
     }
 }
 
