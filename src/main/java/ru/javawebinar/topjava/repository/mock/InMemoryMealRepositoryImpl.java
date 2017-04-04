@@ -4,6 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -18,10 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-/**
- * GKislin
- * 15.09.2015.
- */
+@Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
 
     private static final Logger LOG = getLogger(InMemoryMealRepositoryImpl.class);
@@ -44,9 +42,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public synchronized void delete(int userId, int id) {
-        repository.remove(userId,id);
+    public synchronized boolean delete(int userId, int id) {
         LOG.debug("userId:"+userId+" | "+id+" is deleted");
+        return repository.remove(userId,id)!=null;
     }
 
     @Override
