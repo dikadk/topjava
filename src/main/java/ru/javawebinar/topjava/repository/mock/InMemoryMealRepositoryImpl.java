@@ -23,12 +23,11 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class InMemoryMealRepositoryImpl implements MealRepository {
 
     private static final Logger LOG = getLogger(InMemoryMealRepositoryImpl.class);
-
     private final Table<Integer, Integer, Meal> repository = HashBasedTable.create();
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(meal -> this.save(2,meal));
+        MealsUtil.MEALS.forEach(meal -> this.save(1,meal));
     }
 
     @Override

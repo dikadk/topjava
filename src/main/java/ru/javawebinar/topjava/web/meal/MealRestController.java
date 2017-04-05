@@ -2,12 +2,34 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+
+import java.util.Collection;
 
 @Controller
 public class MealRestController {
 
-    @Autowired
     private MealService service;
 
+    @Autowired
+    public void setService(MealService service){
+        this.service = service;
+    }
+
+    public void save(int id, Meal meal) {
+        service.save(id,meal);
+    }
+
+    public void delete(int userId, int id) {
+        service.delete(userId, id);
+    }
+
+    public Meal get(int userId, int id) {
+        return service.get(userId, id);
+    }
+
+    public Collection<Meal> getAll(int userId) {
+        return service.getAll(userId);
+    }
 }

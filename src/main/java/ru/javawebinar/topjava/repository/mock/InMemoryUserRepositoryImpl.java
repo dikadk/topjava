@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
+
     private static final Logger LOG = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);

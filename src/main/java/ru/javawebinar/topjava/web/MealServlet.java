@@ -11,6 +11,7 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.service.MealServiceImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -28,14 +29,14 @@ import java.util.Objects;
  */
 public class MealServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MealServlet.class);
-    ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")
-
-    private MealService mealService;
+    private ConfigurableApplicationContext appCtx;
+    private MealRestController mealRestController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        mealService = new MealServiceImpl();
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        mealRestController = appCtx.getBean(MealRestController.class);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class MealServlet extends HttpServlet {
                 Integer.valueOf(request.getParameter("calories")));
 
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        mealService.save(AuthorizedUser.id(), meal);
+        mealRestController.save(AuthorizedUser.id(), meal);
         response.sendRedirect("meals");
     }
 
@@ -62,14 +63,14 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 LOG.info("Delete {}", id);
-                mealService.delete(userId,id);
+                mealRestController.delete(userId,id);
                 response.sendRedirect("meals");
                 break;
             case "create":
             case "update":
                 final Meal meal = action.equals("create") ?
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                        mealService.get(userId,getId(request));
+                        mealRestController.get(userId,getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/meal.jsp").forward(request, response);
                 break;
@@ -77,10 +78,16 @@ public class MealServlet extends HttpServlet {
             default:
                 LOG.info("getAll");
                 request.setAttribute("meals",
-                        MealsUtil.getWithExceeded(mealService.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                        MealsUtil.getWithExceeded(mealRestController.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        appCtx.close();
     }
 
     private int getId(HttpServletRequest request) {
