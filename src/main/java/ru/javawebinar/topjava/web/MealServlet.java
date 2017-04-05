@@ -43,12 +43,11 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-
+        LOG.info("submitting meals form");
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
-
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         mealRestController.save(AuthorizedUser.id(), meal);
         response.sendRedirect("meals");
@@ -63,22 +62,29 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 LOG.info("Delete {}", id);
-                mealRestController.delete(userId,id);
+                mealRestController.delete(userId, id);
                 response.sendRedirect("meals");
                 break;
             case "create":
             case "update":
                 final Meal meal = action.equals("create") ?
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                        mealRestController.get(userId,getId(request));
+                        mealRestController.get(userId, getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/meal.jsp").forward(request, response);
                 break;
             case "all":
             default:
                 LOG.info("getAll");
-                request.setAttribute("meals",
-                        MealsUtil.getWithExceeded(mealRestController.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                String startDate = request.getParameter("startDate");
+                String startTime = request.getParameter("startTime");
+                String endDate = request.getParameter("endDate");
+                String endTime = request.getParameter("endTime");
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("startTime", startTime);
+                request.setAttribute("endDate", endDate);
+                request.setAttribute("endTime", endTime);
+                request.setAttribute("meals", mealRestController.getAll(userId,startDate,endDate,startTime,endTime));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }

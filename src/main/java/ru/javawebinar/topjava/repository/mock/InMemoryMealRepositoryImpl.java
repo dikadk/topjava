@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -53,14 +55,43 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public synchronized Collection<Meal> getAll(int userId) {
+    public synchronized Collection<Meal> getAll(int userId, String startDate, String endDate, String startTime, String endTime) {
         Collection<Meal> meals = new ArrayList<>();
         for(Table.Cell<Integer, Integer, Meal> cell: repository.cellSet()){
             if(cell.getRowKey()==userId){
                 meals.add(cell.getValue());
             }
         }
-        return meals.stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
+        LocalDate ldStartDate;
+        try {
+            ldStartDate = LocalDate.parse(startDate);
+        }catch (NullPointerException e){
+            LOG.error(e.toString());
+            ldStartDate = LocalDate.MIN;
+        }
+        LocalDate ldEndDate;
+        try {
+            ldEndDate = LocalDate.parse(startDate);
+        }catch (NullPointerException e){
+            LOG.error(e.toString());
+            ldEndDate = LocalDate.MAX;
+        }
+        LocalDate ltStartTime;
+        try {
+            ldStartDate = LocalDate.parse(startDate);
+        }catch (NullPointerException e){
+            LOG.error(e.toString());
+            ldStartDate = LocalDate.MIN;
+        }
+        LocalDate ltEndTime;
+        try {
+            ldStartDate = LocalDate.parse(startDate);
+        }catch (NullPointerException e){
+            LOG.error(e.toString());
+            ldStartDate = LocalDate.MIN;
+        }
+
+        return meals.stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).filter(meal->DateTimeUtil.isBetweenDate(meal.getDate(),ldStartDate,LocalDate.parse(endDate))).collect(Collectors.toList());
     }
 }
 

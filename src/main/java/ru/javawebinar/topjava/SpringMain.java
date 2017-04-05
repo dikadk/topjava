@@ -18,7 +18,6 @@ public class SpringMain {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             MealService mealService = appCtx.getBean(MealServiceImpl.class);
-            System.out.println(mealService.getAll(2));
             adminUserController.create(new User(null, "userName", "email", "password", Role.ROLE_ADMIN));
         }
     }

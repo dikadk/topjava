@@ -11,5 +11,5 @@ public interface MealService {
 
     Meal get(int userId, int id);
 
-    Collection<Meal> getAll(int userId);
+    Collection<Meal> getAll(int userId, String startDate, String endDate, String startTime, String endTime);
 }

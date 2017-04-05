@@ -16,15 +16,21 @@
         .exceeded {
             color: red;
         }
-        .container .jumbotron{
+
+        .container .jumbotron {
             padding: 0 !important;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+        }
+        .control-label.col-sm-2{
+            margin-right: -70px;
         }
     </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -37,37 +43,38 @@
 <section>
     <div class="container">
         <h2>Meal list</h2>
-        <div class="jumbotron">
-            <div class="form-group">
-                <div class="panel-body">
-                    <form id="filter" class="form-horizontal" action="meals" method="post">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="startDate">От даты:</label>
-                            <div class="col-sm-3">
-                                <input class="form-control" name="startDate" id="startDate" type="date"/>
-                            </div>
-                            <label class="control-label col-sm-4" for="startTime">От времени:</label>
-                            <div class="col-sm-2">
-                                <input class="form-control" name="startTime" id="startTime" type="time"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="endDate">До даты:</label>
-                            <div class="col-sm-3">
-                                <input class="form-control" name="endDate" id="endDate" type="date"/>
-                            </div>
-                            <label class="control-label col-sm-4" for="endTime">До времени:</label>
-                            <div class="col-sm-2">
-                                <input class="form-control" name="endTime" id="endTime" type="time"/>
-                            </div>
-                            <div class="row">
+        <div class="col-sm-12">
+            <div class="jumbotron">
+                <div class="form-group">
+                    <div class="panel-body">
+                        <form id="filter" class="form-horizontal" action="meals" method="get">
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="startDate" >От даты:</label>
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary">Filter</button>
-                                    <button type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                                    <input class="form-control" name="startDate" id="startDate" type="date"/>
+                                </div>
+                                <label class="control-label col-sm-2" for="startTime">От времени:</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="startTime" id="startTime" type="time"/>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <label class="control-label col-sm-1" for="endDate">До даты:</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="endDate" id="endDate" type="date"/>
+                                </div>
+                                <label class="control-label col-sm-2" for="endTime">До времени:</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="endTime" id="endTime" type="time"/>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                                <button type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
