@@ -8,6 +8,8 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -20,9 +22,13 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private static final Logger LOG = getLogger(InMemoryMealRepositoryImpl.class);
     private final Table<Integer, Integer, Meal> repository = HashBasedTable.create();
     private AtomicInteger counter = new AtomicInteger(0);
+    private static final int ADMIN = 2;
+    private static final int USER_1 = 1;
 
     {
-        MealsUtil.MEALS.forEach(meal -> this.save(1,meal));
+        MealsUtil.MEALS.forEach(meal -> this.save(USER_1,meal));
+        repository.put(ADMIN, counter.incrementAndGet(), new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
+        repository.put(ADMIN, counter.incrementAndGet(), new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
     }
 
     @Override

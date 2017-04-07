@@ -49,14 +49,14 @@ public class MealServlet extends HttpServlet {
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        mealRestController.save(AuthorizedUser.id(), meal);
+        mealRestController.save(AuthorizedUser.getId(), meal);
         response.sendRedirect("meals");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        int userId = AuthorizedUser.id();
+        int userId = AuthorizedUser.getId();
 
         switch (action == null ? "all" : action) {
             case "delete":
