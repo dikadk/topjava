@@ -15,5 +15,5 @@ public interface MealRepository {
 
     Meal get(int userId, int id);
 
-    Collection<Meal> getAll(int userId, String startDate, String endDate, String startTime, String endTime);
+    Collection<Meal> getAll(int userId);
 }

@@ -1,21 +1,14 @@
 package ru.javawebinar.topjava.repository.mock;
 
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -34,6 +27,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public synchronized Meal save(int userId, Meal meal) {
+        Objects.requireNonNull(meal);
+
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
         }
@@ -55,43 +50,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public synchronized Collection<Meal> getAll(int userId, String startDate, String endDate, String startTime, String endTime) {
-        Collection<Meal> meals = new ArrayList<>();
-        for(Table.Cell<Integer, Integer, Meal> cell: repository.cellSet()){
-            if(cell.getRowKey()==userId){
-                meals.add(cell.getValue());
-            }
-        }
-        LocalDate ldStartDate;
-        try {
-            ldStartDate = LocalDate.parse(startDate);
-        }catch (NullPointerException e){
-            LOG.error(e.toString());
-            ldStartDate = LocalDate.MIN;
-        }
-        LocalDate ldEndDate;
-        try {
-            ldEndDate = LocalDate.parse(startDate);
-        }catch (NullPointerException e){
-            LOG.error(e.toString());
-            ldEndDate = LocalDate.MAX;
-        }
-        LocalDate ltStartTime;
-        try {
-            ldStartDate = LocalDate.parse(startDate);
-        }catch (NullPointerException e){
-            LOG.error(e.toString());
-            ldStartDate = LocalDate.MIN;
-        }
-        LocalDate ltEndTime;
-        try {
-            ldStartDate = LocalDate.parse(startDate);
-        }catch (NullPointerException e){
-            LOG.error(e.toString());
-            ldStartDate = LocalDate.MIN;
-        }
-
-        return meals.stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).filter(meal->DateTimeUtil.isBetweenDate(meal.getDate(),ldStartDate,LocalDate.parse(endDate))).collect(Collectors.toList());
-    }
+    public synchronized Collection<Meal> getAll(int userId) {
+        Map<Integer,Meal> meals = repository.row(userId);
+        return meals == null ? Collections.emptyList() :meals.values().stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
+       }
 }
 

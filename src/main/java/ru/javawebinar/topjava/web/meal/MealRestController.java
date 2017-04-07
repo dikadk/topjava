@@ -31,7 +31,7 @@ public class MealRestController {
         return service.get(userId, id);
     }
 
-    public List<MealWithExceed> getAll(int userId, String startDate, String endDate, String startTime, String endTime) {
-        return MealsUtil.getWithExceeded(service.getAll(userId,startDate,endDate,startTime,endTime), MealsUtil.DEFAULT_CALORIES_PER_DAY);
+    public List<MealWithExceed> getAll(int userId) {
+        return MealsUtil.getWithExceeded(service.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 }
