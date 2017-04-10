@@ -27,8 +27,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     {
         MealsUtil.MEALS.forEach(meal -> this.save(USER_1,meal));
-        repository.put(ADMIN, counter.incrementAndGet(), new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
-        repository.put(ADMIN, counter.incrementAndGet(), new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
+        repository.put(ADMIN, 1, new Meal(1,LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
+        repository.put(ADMIN, 2, new Meal(2,LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
     }
 
     @Override
