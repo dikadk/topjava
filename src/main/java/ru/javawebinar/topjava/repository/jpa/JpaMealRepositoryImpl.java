@@ -45,7 +45,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return em.createQuery(Meal.GETALL, Meal.class).getResultList();
+        return em.createNamedQuery(Meal.GETALL, Meal.class).getResultList();
     }
 
     @Override
